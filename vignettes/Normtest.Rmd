@@ -1,0 +1,53 @@
+---
+title: "Introduction to Normtest"
+author: "Luca Rizzi"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Test for normality
+
+First of all we load the package
+
+```{r}
+require(normtest)
+```
+
+Then, I provide an example with normal data along with print and summary methods.
+
+```{r, fig.show='hold'}
+set.seed(101)
+x <- rnorm(10^2, 7, 1)
+test <- normtest(x)
+test
+summary(test)
+```
+
+Here is an example with missing data.
+
+```{r}
+y <- x; y[7] <- NA
+normtest(y, na.rm = TRUE)
+```
+
+Another example with non normal data
+
+```{r}
+z <- rlnorm(100, 7, 2)
+normtest(z)
+```
+

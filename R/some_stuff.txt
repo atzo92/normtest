@@ -1,0 +1,8 @@
+main function come from a function specification which comes from a business specification
+In the main function we have all the stuff we put inside
+
+That's what an analyst does. He imagines things he's done many times and than programs
+
+The steps, are main function, document, build and test. Repeat till you get mad.
+
+For creating a method in R we use S3 framework
