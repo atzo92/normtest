@@ -26,10 +26,43 @@ normtest <- function(x, ...){
 
         basic_stats <- basic_stats(x, ...)
         tests <- list(ks = ks(x, ...), ad = ad(x))
-        normtest <- list(basic_stats = basic_stats, tests = tests)
+        pl <- plot_normtest(x)
+        normtest <- list(basic_stats = basic_stats, tests = tests, plot = pl)
         class(normtest) <- "normtest"
         return(normtest)
 
+}
+###############################################
+
+#' @title Plot method for objects of class normtest
+#' @param x Object of class normtest
+#' @return invisible NULL
+#' @examples
+#' a <- rnorm(1000,7,2)
+#' nt <- normtest(a)
+#' plot(nt)
+#' @export
+
+plot.normtest <- function(x){
+            if(class(x)!='normtest') stop('Error!, x must be of class normtest')
+            x <- x$plot
+            pl <- plot_normtest(x)
+            pl
+}
+
+###############################################
+
+#' @title Plot function for normality test
+#' @param x numeric vector
+#' @return object of class ggplot
+#' @importFrom ggplot2 ggplot aes geom_histogram
+#' @examples
+#' plot_normtest(rnorm(20))
+#' @export
+
+plot_normtest <- function(x){
+              pl <- ggplot(NULL, aes(x)) + geom_histogram()
+              pl
 }
 
 ###############################################
@@ -43,7 +76,6 @@ normtest <- function(x, ...){
 #' x <- rnorm(10, 7, 1)
 #' basic_stats(x)
 #' @importFrom timeDate skewness kurtosis
-#' @export
 
 basic_stats <- function(x, ...){
 
@@ -125,8 +157,6 @@ print.normtest <- function(x){
         return(invisible(NULL))
 
 }
-
-
 ######################################################
 
 #' @title Summary Method for Objects of Class normtest
@@ -150,19 +180,3 @@ summary.normtest <- function(x){
 }
 
 ###########################################
-
-#' @title Plotting Method for Objects of class normtest
-#' @param x Object of class normtest
-#' @return invisible NULL
-#' @export
-plot.normtest <- function(x){
-
-        par(mfrow = c(1, 2))
-        hist(x)
-        qqnorm(x)
-        return(invisible(NULL))
-
-
-}
-
-#########################################
